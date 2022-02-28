@@ -12,8 +12,41 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('to_do_list')
 
-list_one = SHEET.worksheet('list_one')
 
-data = list_one.get_all_values()
+def get_option():
+    """
+    hej
+    """
+    option = 1
 
-print(data)
+    options_selector(option)
+
+
+def options_selector(option):
+    """
+    hej
+    """
+
+    list_of_functions = [function0, function1, function2]
+    list_of_functions[option]()
+
+
+def function0():
+    """
+    hej
+    """
+    print("function 0")
+
+
+def function1():
+    """
+    hej
+    """
+    print("function 1")
+
+
+def function2():
+    """
+    hej
+    """
+    print("function 2")
