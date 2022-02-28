@@ -19,10 +19,9 @@ def get_option():
     and gets the items from worksheet
     """
     print("welcome to your To Do List\n")
-    print("Input what function you want to run\n")
-    print("You input should be a number between 1-5 the number corresponds to different functions\n")
+    print("Input the number corresponding to the function you want\n")
     print(
-        "1: Display you to do list\n"
+        "1: Display your to do list\n"
         "2\n"
         "3\n"
         "4\n"
@@ -43,7 +42,18 @@ def display_list():
     """
     Get the list from the worksheet and displays it
     """
-    print("display_items")
+    items = SHEET.worksheet("list_one").get_all_values()
+
+    column1 = [item[0] for item in items]
+    column2 = [item[1] for item in items]
+
+    print("this is on your to do list \n")
+    i = 0
+    while i < len(column1):
+        print(column1[i], "This will take about " + column2[i] + " minutes\n")
+        i += 1
+
+    return_to_main()
 
 
 def check_of_items():
@@ -72,6 +82,22 @@ def remove_all_items():
     hej
     """
     print("remove_all_items")
+
+
+def return_to_main():
+    """
+    returns the user to main menu if 0 is inputed
+    """
+    print("input 0 to return to main menu")
+
+    input0 = int(input("Enter your data here:\n "))
+
+    if exit == 0:
+        print(f"Your number is not 0, you provided {input0}!")
+        print("please try again \n")
+        return_to_main()
+    else:
+        get_option()
 
 
 def options_selector(option):
