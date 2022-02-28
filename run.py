@@ -15,9 +15,21 @@ SHEET = GSPREAD_CLIENT.open('to_do_list')
 
 def get_option():
     """
-    hej
+    Gets what funtion the user wants to run
+    and gets the items from worksheet
     """
-    option = 1
+    print("welcome to your To Do List\n")
+    print("Input what function you want to run\n")
+    print("You input should be a number between 1-5 the number corresponds to different functions\n")
+    print(
+        "1\n"
+        "2\n"
+        "3\n"
+        "4\n"
+        "5\n"
+        )
+
+    option = input.int("Enter your data here:\n ")
 
     options_selector(option)
 
@@ -27,26 +39,46 @@ def options_selector(option):
     hej
     """
 
-    list_of_functions = [function0, function1, function2]
+    list_of_functions = [
+        get_option, display_items1, check_of_items, add_item,
+        display_items_left, remove_all_items
+        ]
     list_of_functions[option]()
 
 
-def function0():
+def display_items1():
     """
     hej
     """
-    print("function 0")
+    print("display_items")
 
 
-def function1():
+def check_of_items():
     """
     hej
     """
-    print("function 1")
+    print("check_of_items")
 
 
-def function2():
+def add_item():
     """
     hej
     """
-    print("function 2")
+    print("add_item")
+
+
+def display_items_left():
+    """
+    hej
+    """
+    print("display_items_left")
+
+
+def remove_all_items():
+    """
+    hej
+    """
+    print("remove_all_items")
+
+
+get_option()
