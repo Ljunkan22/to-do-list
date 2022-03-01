@@ -22,7 +22,7 @@ def get_option():
     print("Input the number corresponding to the function you want\n")
     print(
         "1: Display your to do list\n"
-        "2\n"
+        "2: Check of items\n"
         "3\n"
         "4\n"
         "5\n"
@@ -30,7 +30,7 @@ def get_option():
 
     option = int(input("Enter your data here:\n "))
 
-    if option > 6:
+    if option >= 5:
         print(f"Your number is not between 1-5, you provided {option}!")
         print("please try again \n")
         get_option()
@@ -48,7 +48,7 @@ def display_list():
     column2 = [item[1] for item in items]
 
     print("this is on your to do list \n")
-    i = 0
+    i = 1
     while i < len(column1):
         print(column1[i], "This will take about " + column2[i] + " minutes\n")
         i += 1
@@ -58,16 +58,36 @@ def display_list():
 
 def check_of_items():
     """
-    hej
+    Update the worksheet to mark difrent items as done
     """
-    print("check_of_items")
+    items = SHEET.worksheet("list_one").get_all_values()
+
+    column1 = [item[0] for item in items]
+    column2 = [item[1] for item in items]
+    column3 = [item[2] for item in items]
+
+    print("this is on your to do list \n")
+    i = 1
+    while i < len(column1):
+        print(
+            i, column1[i], "Takes about " +
+            column2[i] + " minutes " + column3[i] + "\n")
+        i += 1
+
+    print("what item are you done with")
+    print("input the number corresponding to the item")
+    print("If you want to return to main menu input exit")
+
+    option = int(input("Enter your data here:\n "))
+
+    items[option, 'status'] = "Done"
+    print(items)
 
 
 def add_item():
     """
     hej
     """
-    print("add_item")
 
 
 def display_items_left():
@@ -92,7 +112,7 @@ def return_to_main():
 
     input0 = int(input("Enter your data here:\n "))
 
-    if exit == 0:
+    if input0 == 0:
         print(f"Your number is not 0, you provided {input0}!")
         print("please try again \n")
         return_to_main()
