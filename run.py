@@ -32,7 +32,7 @@ def get_option():
 
     option = int(input("Enter your number here:\n "))
     print()
-    if option >= 5:
+    if option >= 6:
         print(f"Your number is not between 1-5, you provided {option}!")
         print("please try again \n")
         get_option()
@@ -41,15 +41,10 @@ def get_option():
         options_selector(option)
 
 
-def display_list():
+def display_list(column1, column2, column3):
     """
     Get the list from the worksheet and displays it
     """
-    items = SHEET.worksheet("list_one").get_all_values()
-    column1 = [item[0] for item in items]
-    column2 = [item[1] for item in items]
-    column3 = [item[2] for item in items]
-
     print("this is on your to do list \n")
     i = 1
     while i < len(column1):
@@ -61,14 +56,10 @@ def display_list():
     return_to_main()
 
 
-def check_of_items():
+def check_of_items(column1, column2, column3):
     """
     Update the worksheet to mark items as done
     """
-    items = SHEET.worksheet("list_one").get_all_values()
-    column1 = [item[0] for item in items]
-    column2 = [item[1] for item in items]
-    column3 = [item[2] for item in items]
 
     print("this is on your to do list \n")
     i = 1
@@ -77,7 +68,7 @@ def check_of_items():
             i, column1[i], "Takes about " +
             column2[i] + " minutes " + column3[i] + "\n")
         i += 1
-
+    items = SHEET.worksheet("list_one").get_all_values()
     print("What item are you done with")
     print("input the number corresponding to the item")
     print("If you want to return to main menu input 0")
@@ -90,11 +81,11 @@ def check_of_items():
     if option < len(column3):
         items[option][2] = "Done"
         SHEET.worksheet("list_one").update(items)
-        check_of_items()
+        check_of_items(column1, column2, column3)
     else:
         print(str(option), " is not a valid number!")
         print("Number must be between 0 and", str(len(column1)-1))
-        check_of_items()
+        check_of_items(column1, column2, column3)
 
 
 def add_item():
@@ -131,16 +122,10 @@ def add_item():
     add_item()
 
 
-def display_items_left():
+def display_items_left(column1, column2, column3):
     """
     Displays items that are not markt as done
     """
-
-    items = SHEET.worksheet("list_one").get_all_values()
-    column1 = [item[0] for item in items]
-    column2 = [item[1] for item in items]
-    column3 = [item[2] for item in items]
-
     time_sum = 0
     i = 1
     while i < len(column3):
@@ -189,11 +174,19 @@ def options_selector(option):
     Use the number inputed and runs the corresponding funtion
     """
 
+    items = SHEET.worksheet("list_one").get_all_values()
+    column1 = [item[0] for item in items]
+    column2 = [item[1] for item in items]
+    column3 = [item[2] for item in items]
+
     list_of_functions = [
         get_option, display_list, check_of_items, add_item,
         display_items_left, remove_all_items
         ]
-    list_of_functions[option]()
+    if option == 5:
+        list_of_functions[option]()
+
+    list_of_functions[option](column1, column2, column3)
 
 
 get_option()
