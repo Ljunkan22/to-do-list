@@ -27,7 +27,7 @@ def get_option():
         "2: Check of items\n"
         "3: Add items to list\n"
         "4: Display items that are not done\n"
-        "5\n"
+        "5: Remove the entire list\n"
         )
 
     option = int(input("Enter your number here:\n "))
@@ -149,7 +149,21 @@ def remove_all_items():
     """
     hej
     """
-    print("remove_all_items")
+    print("Do you want to remove all the items in the list?")
+    print("Enter 0 for No and 1 Yes ")
+
+    remove_list = int(input("Enter answer here:\n"))
+
+    if remove_list == 0:
+        return_to_main()
+
+    SHEET.worksheet("list_one").clear()
+
+    header = ["Thing to do", "Time", "Status"]
+    SHEET.worksheet("list_one").append_row(header)
+
+    print(LINE)
+    get_option()
 
 
 def return_to_main():
@@ -172,6 +186,7 @@ def return_to_main():
 def options_selector(option):
     """
     Use the number inputed and runs the corresponding funtion
+    and gets the values from worksheet
     """
 
     items = SHEET.worksheet("list_one").get_all_values()
@@ -183,7 +198,8 @@ def options_selector(option):
         get_option, display_list, check_of_items, add_item,
         display_items_left, remove_all_items
         ]
-    if option == 5:
+
+    if option in (3, 5):
         list_of_functions[option]()
 
     list_of_functions[option](column1, column2, column3)
