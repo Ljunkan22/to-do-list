@@ -26,7 +26,7 @@ def get_option():
         "1: Display your to do list\n"
         "2: Check of items\n"
         "3: Add items to list\n"
-        "4\n"
+        "4: Display items that are not done\n"
         "5\n"
         )
 
@@ -46,7 +46,6 @@ def display_list():
     Get the list from the worksheet and displays it
     """
     items = SHEET.worksheet("list_one").get_all_values()
-
     column1 = [item[0] for item in items]
     column2 = [item[1] for item in items]
     column3 = [item[2] for item in items]
@@ -67,7 +66,6 @@ def check_of_items():
     Update the worksheet to mark items as done
     """
     items = SHEET.worksheet("list_one").get_all_values()
-
     column1 = [item[0] for item in items]
     column2 = [item[1] for item in items]
     column3 = [item[2] for item in items]
@@ -135,9 +133,31 @@ def add_item():
 
 def display_items_left():
     """
-    hej
+    Displays items that are not markt as done
     """
-    print("display_items_left")
+
+    items = SHEET.worksheet("list_one").get_all_values()
+    column1 = [item[0] for item in items]
+    column2 = [item[1] for item in items]
+    column3 = [item[2] for item in items]
+
+    time_sum = 0
+    i = 1
+    while i < len(column3):
+        if column3[i] == "Not done":
+            print(
+                f"{i} {column1[i]} Takes about {column2[i]}"
+                f" min {column3[i]} \n")
+
+            time_sum += int(column2[i])
+
+        i += 1
+    hour_sum = time_sum / 60
+    min_sum = int(0 + (hour_sum - int(hour_sum)) * 100)
+    print(f"It will take you aboute {time_sum} min to get all the items done")
+    print(f"Or about {int(hour_sum)} hours and {min_sum} min")
+
+    return_to_main()
 
 
 def remove_all_items():
