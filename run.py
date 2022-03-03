@@ -154,7 +154,7 @@ def display_items_left(column1, column2, column3):
 
         i += 1
     hour_sum = time_sum / 60
-    min_sum = int(0 + (hour_sum - int(hour_sum)) * 100)
+    min_sum = round(0 + (hour_sum - int(hour_sum)) * 60)
     print(f"It will take you aboute {time_sum} min to get all the items done")
     print(f"Or about {int(hour_sum)} hours and {min_sum} min\n")
     print(LINE)
