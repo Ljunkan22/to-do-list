@@ -30,15 +30,19 @@ def get_option():
         "5: Remove the entire list\n"
         )
 
-    option = int(input("Enter your number here:\n "))
-    print()
-    if option >= 6:
-        print(f"Your number is not between 1-5, you provided {option}!")
+    try:
+        option = int(input("Enter your number here:\n "))
+
+        if 1 <= option <= 5:
+            print(LINE)
+            options_selector(option)
+
+        raise ValueError()
+    except ValueError:
+        print(LINE)
+        print("Your number is not between 1-5,")
         print("please try again \n")
         get_option()
-    else:
-        print(LINE)
-        options_selector(option)
 
 
 def display_list(column1, column2, column3):
@@ -60,7 +64,6 @@ def check_of_items(column1, column2, column3):
     """
     Update the worksheet to mark items as done
     """
-
     print("this is on your to do list \n")
     i = 1
     while i < len(column1):
@@ -73,18 +76,23 @@ def check_of_items(column1, column2, column3):
     print("input the number corresponding to the item")
     print("If you want to return to main menu input 0")
 
-    option = int(input("Enter your number here:\n "))
+    try:
+        option = int(input("Enter your number here:\n "))
 
-    if option == 0:
-        get_option()
+        if option == 0:
+            get_option()
 
-    if option < len(column3):
-        items[option][2] = "Done"
-        SHEET.worksheet("list_one").update(items)
-        check_of_items(column1, column2, column3)
-    else:
-        print(str(option), " is not a valid number!")
-        print("Number must be between 0 and", str(len(column1)-1))
+        if option < len(column3):
+            items[option][2] = "Done"
+            SHEET.worksheet("list_one").update(items)
+            check_of_items(column1, column2, column3)
+
+        raise ValueError()
+    except ValueError:
+        print(LINE)
+        print("Your entry was not a valid number!")
+        print("You need to enter a number corresponding to an item")
+        print("please try again \n")
         check_of_items(column1, column2, column3)
 
 
@@ -92,34 +100,42 @@ def add_item():
     """
     Adds one or more items to the list
     """
+    print("Enter a new item to the list")
+    print("Example: Go for a run")
     print("If you want to return to main menu input 0\n")
 
-    print("Input a new item to the list")
-    print("Example: Go for a run\n")
-    new_item = input("Enter your item here:\n ")
-
-    if new_item == "0":
-        print(LINE)
-        get_option()
-
     try:
-        print("Input how long you think it's going to take in minutes")
+        new_item = input("Enter your item here:\n ")
+
+        if new_item == "0":
+            print(LINE)
+            get_option()
+
+        if new_item == "":
+            print(LINE)
+            print("Yor entry cant be blank")
+            print("please try again \n")
+            add_item()
+
+        print(LINE)
+        print("Enter how long you think it's going to take in minutes")
         print("Example: 45\n")
         new_time = int(input("Enter the time here:\n "))
 
         if new_time == 0:
             get_option()
 
-    except ValueError:
+        new_row = [new_item, str(new_time), "Not done"]
+        SHEET.worksheet("list_one").append_row(new_row)
         print(LINE)
-        print("This is not a valid number!\n")
         add_item()
 
-    new_row = [new_item, str(new_time), "Not done"]
-    SHEET.worksheet("list_one").append_row(new_row)
-
-    print(LINE)
-    add_item()
+        raise ValueError()
+    except ValueError:
+        print(LINE)
+        print("That is not a valid number!\n")
+        print("please try again \n")
+        add_item()
 
 
 def display_items_left(column1, column2, column3):
@@ -140,7 +156,8 @@ def display_items_left(column1, column2, column3):
     hour_sum = time_sum / 60
     min_sum = int(0 + (hour_sum - int(hour_sum)) * 100)
     print(f"It will take you aboute {time_sum} min to get all the items done")
-    print(f"Or about {int(hour_sum)} hours and {min_sum} min")
+    print(f"Or about {int(hour_sum)} hours and {min_sum} min\n")
+    print(LINE)
 
     return_to_main()
 
@@ -150,35 +167,49 @@ def remove_all_items():
     hej
     """
     print("Do you want to remove all the items in the list?")
-    print("Enter 0 for No and 1 Yes ")
+    print("Enter 0 to return to manin page or 1 to remove the list\n")
 
-    remove_list = int(input("Enter answer here:\n"))
+    try:
+        remove_list = int(input("Enter answer here:\n"))
 
-    if remove_list == 0:
-        return_to_main()
+        if remove_list == 0:
+            print(LINE)
+            get_option()
 
-    SHEET.worksheet("list_one").clear()
+        if remove_list == 1:
+            SHEET.worksheet("list_one").clear()
 
-    header = ["Thing to do", "Time", "Status"]
-    SHEET.worksheet("list_one").append_row(header)
+            header = ["Thing to do", "Time", "Status"]
+            SHEET.worksheet("list_one").append_row(header)
 
-    print(LINE)
-    get_option()
+            print(LINE)
+            get_option()
+
+        raise ValueError()
+    except ValueError:
+        print(LINE)
+        print("Entry was not valid")
+        print("please try again \n")
+        remove_all_items()
 
 
 def return_to_main():
     """
     returns the user to main menu if 0 is inputed
     """
-    print(LINE)
     print("input 0 to return to main menu")
 
-    input0 = int(input("Enter your data here:\n "))
+    try:
+        input0 = int(input("Enter 0 here:\n "))
 
-    if input0 == 0:
-        get_option()
-    else:
-        print(f"Your number is not 0, you provided {input0}!")
+        if input0 == 0:
+            print(LINE)
+            get_option()
+
+        raise ValueError()
+    except ValueError:
+        print(LINE)
+        print("Your number is not 0!")
         print("please try again \n")
         return_to_main()
 
