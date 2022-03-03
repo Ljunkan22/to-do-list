@@ -90,7 +90,7 @@ def check_of_items(column1, column2, column3):
             print("The item has been updated\n")
             print(LINE)
             check_of_items(column1, column2, column3)
-            
+
         raise ValueError()
     except ValueError:
         print(LINE)
